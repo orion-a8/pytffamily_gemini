@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadStates("successorState");
 });
 
+
 function loadStates(elementId) {
     let states = ["उत्तर प्रदेश", "मध्य प्रदेश"]; // राज्य लिस्ट
     let stateDropdown = document.getElementById(elementId);
