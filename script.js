@@ -89,7 +89,7 @@ function submitForm(event) {
         timestamp: new Date().toLocaleString()
     };
 
-    fetch("YOUR_GOOGLE_APPS_SCRIPT_URL", {
+    fetch("https://script.google.com/macros/s/AKfycbz_l7BZm7m0DNDdWE1ZX5VBHm5zaPhj472kAyXigQYLBu_2EKpFoSFbxKc2yfyOnuw6/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
