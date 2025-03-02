@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Google Apps Script वेब ऐप URL
-    const scriptUrl = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbxgMH2qwUZ1LorvfD-zaxQSd3OcLkmDNr4SjouRzCb7S4nItO2eun9xiXtO42p_cqYg/exec';
 
     fetch(scriptUrl, {
       method: 'POST',
