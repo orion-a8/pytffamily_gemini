@@ -1,109 +1,104 @@
 document.addEventListener("DOMContentLoaded", function () {
-    loadStates();
-    
-    document.getElementById("state").addEventListener("change", loadDivisions);
-    document.getElementById("division").addEventListener("change", loadDistricts);
-    document.getElementById("registrationForm").addEventListener("submit", submitForm);
+    loadStates("state");
+    loadStates("successorState");
+    loadFighterNames();
 });
 
-const stateData = {
-    "मध्य प्रदेश": {
-        "भोपाल": ["भोपाल", "रायसेन"],
-        "इंदौर": ["इंदौर", "देवास"]
-    },
-    "उत्तर प्रदेश": {
-        "लखनऊ": ["लखनऊ", "बाराबंकी"],
-        "कानपुर": ["कानपुर नगर", "कानपुर देहात"]
-    },
-    "छत्तीसगढ़": {
-        "रायपुर": ["रायपुर", "बलौदाबाजार"]
-    },
-    "महाराष्ट्र": {
-        "मुंबई": ["मुंबई", "ठाणे"]
-    }
-};
-
-function loadStates() {
-    const stateSelect = document.getElementById("state");
-    stateSelect.addEventListener("change", function () {
-        if (this.value === "नया") {
-            let newState = prompt("नया राज्य दर्ज करें:");
-            if (newState) {
-                stateData[newState] = {};
-                let newOption = document.createElement("option");
-                newOption.text = newState;
-                newOption.value = newState;
-                stateSelect.add(newOption);
-                stateSelect.value = newState;
-            } else {
-                this.value = "";
-            }
-        }
+function loadStates(elementId) {
+    const states = ["उत्तर प्रदेश", "मध्य प्रदेश"];
+    let stateDropdown = document.getElementById(elementId);
+    states.forEach(state => {
+        let option = document.createElement("option");
+        option.value = state;
+        option.textContent = state;
+        stateDropdown.appendChild(option);
     });
 }
 
-function loadDivisions() {
-    let state = document.getElementById("state").value;
-    let divisionSelect = document.getElementById("division");
-    divisionSelect.innerHTML = "<option value=''>चुनें</option>";
-
-    if (state in stateData) {
-        for (let division in stateData[state]) {
+function loadDivisions(state, divisionId) {
+    const divisions = {
+        "उत्तर प्रदेश": ["लखनऊ", "वाराणसी"],
+        "मध्य प्रदेश": ["भोपाल", "इंदौर"]
+    };
+    let divisionDropdown = document.getElementById(divisionId);
+    divisionDropdown.innerHTML = <option value="">संभाग चुनें</option>;
+    if (divisions[state]) {
+        divisions[state].forEach(division => {
             let option = document.createElement("option");
             option.value = division;
             option.textContent = division;
-            divisionSelect.appendChild(option);
-        }
-    }
-}
-
-function loadDistricts() {
-    let state = document.getElementById("state").value;
-    let division = document.getElementById("division").value;
-    let districtSelect = document.getElementById("district");
-    districtSelect.innerHTML = "<option value=''>चुनें</option>";
-
-    if (state in stateData && division in stateData[state]) {
-        stateData[state][division].forEach(district => {
-            let option = document.createElement("option");
-            option.value = district;
-            option.textContent = district;
-            districtSelect.appendChild(option);
+            divisionDropdown.appendChild(option);
         });
     }
 }
 
-function submitForm(event) {
-    event.preventDefault();
-
-    let formData = {
-        state: document.getElementById("state").value,
-        division: document.getElementById("division").value,
-        district: document.getElementById("district").value,
-        freedomFighter: document.getElementById("freedomFighter").value,
-        successorName: document.getElementById("successorName").value,
-        relation: document.getElementById("relation").value,
-        mobile: document.getElementById("mobile").value,
-        address: document.getElementById("address").value,
-        idNumber: document.getElementById("idNumber").value,
-        timestamp: new Date().toLocaleString()
+function loadDistricts(division, districtId) {
+    const districts = {
+        "लखनऊ": ["लखनऊ", "बाराबंकी"],
+        "वाराणसी": ["वाराणसी", "चंदौली"],
+        "भोपाल": ["भोपाल", "सीहोर"],
+        "इंदौर": ["इंदौर", "उज्जैन"]
     };
-
-    fetch("https://script.google.com/macros/s/AKfycbz_l7BZm7m0DNDdWE1ZX5VBHm5zaPhj472kAyXigQYLBu_2EKpFoSFbxKc2yfyOnuw6/exec", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === "success") {
-            alert("✅ डेटा सफलतापूर्वक सेव हो गया!");
-            document.getElementById("registrationForm").reset();
-        } else {
-            alert("❌ डेटा सेव करने में समस्या हुई!");
-        }
-    })
-    .catch(error => {
-        alert("❌ नेटवर्क त्रुटि: " + error);
-    });
+    let districtDropdown = document.getElementById(districtId);
+    districtDropdown.innerHTML = <option value="">जिला चुनें</option>;
+    if (districts[division]) {
+        districts[division].forEach(district => {
+            let option = document.createElement("option");
+            option.value = district;
+            option.textContent = district;
+            districtDropdown.appendChild(option);
+        });
+    }
 }
+
+function loadFighterNames() {
+    google.script.run.withSuccessHandler(fighters => {
+        let fighterDropdown = document.getElementById("fighterName");
+        fighterDropdown.innerHTML = <option value="">सेनानी चुनें</option>;
+        fighters.forEach(fighter => {
+            let option = document.createElement("option");
+            option.value = fighter;
+            option.textContent = fighter;
+            fighterDropdown.appendChild(option);
+        });
+    }).getFighterNames();
+}
+
+function loadFighterData(fighterName) {
+    if (fighterName) {
+        google.script.run.withSuccessHandler(data => {
+            console.log("सेनानी डेटा:", data);
+        }).getFighterDetails(fighterName);
+    }
+}
+
+function showExtraFields(relation) {
+    let extraFields = document.getElementById("extraFields");
+    extraFields.innerHTML = "";
+    
+    if (relation === "प्रपौत्र") {
+        extraFields.innerHTML = `
+            <label for="fatherName">पिता का नाम:</label>
+            <input type="text" id="fatherName" name="fatherName" required>
+            <label for="grandfatherName">दादा का नाम:</label>
+            <input type="text" id="grandfatherName" name="grandfatherName" required>
+        `;
+    } else if (relation === "पोता") {
+        extraFields.innerHTML = `
+            <label for="fatherName">पिता का नाम:</label>
+            <input type="text" id="fatherName" name="fatherName" required>
+        `;
+    }
+}
+
+document.getElementById("freedomFighterForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    let formData = new FormData(this);
+    let data = {};
+    formData.forEach((value, key) => data[key] = value);
+    
+    google.script.run.withSuccessHandler(response => {
+        alert("डेटा सफलतापूर्वक सेव हुआ!");
+        document.getElementById("freedomFighterForm").reset();
+    }).saveFormData(data);
+});
