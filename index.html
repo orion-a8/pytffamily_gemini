@@ -1,75 +1,81 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>स्वतंत्रता सेनानी उत्तराधिकारी फॉर्म</title>
+    <title>सेनानी उत्तराधिकारी फॉर्म</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>स्वतंत्रता सेनानी उत्तराधिकारी फॉर्म</h2>
-    <form id="freedomFighterForm">
-        
-        <label for="state">सेनानी का राज्य:</label>
-        <select id="state" name="state" required onchange="loadDivisions(this.value, 'division')">
-            <option value="">राज्य चुनें</option>
-        </select>
+    <h1>सेनानी उत्तराधिकारी फॉर्म</h1>
+    <form id="senaniForm">
+        <fieldset>
+            <legend>सेनानी का विवरण</legend>
+            <label for="senaniRajya">राज्य:</label>
+            <select id="senaniRajya" name="senaniRajya">
+                <option value="">चुनें</option>
+                <option value="उत्तर प्रदेश">उत्तर प्रदेश</option>
+                </select>
 
-        <label for="division">संभाग:</label>
-        <select id="division" name="division" required onchange="loadDistricts(this.value, 'district')">
-            <option value="">संभाग चुनें</option>
-        </select>
+            <label for="senaniSambhag">संभाग:</label>
+            <select id="senaniSambhag" name="senaniSambhag">
+                <option value="">चुनें</option>
+            </select>
 
-        <label for="district">जिला:</label>
-        <select id="district" name="district" required>
-            <option value="">जिला चुनें</option>
-        </select>
+            <label for="senaniJila">जिला:</label>
+            <select id="senaniJila" name="senaniJila">
+                <option value="">चुनें</option>
+            </select>
 
-        <label for="fighterName">सेनानी का नाम:</label>
-        <select id="fighterName" name="fighterName" onchange="loadFighterData(this.value)">
-            <option value="">सेनानी चुनें</option>
-        </select>
-        <input type="text" id="newFighterName" name="newFighterName" placeholder="नया सेनानी जोड़ें" style="display:none;">
+            <label for="senaniNaam">सेनानी का नाम:</label>
+            <select id="senaniNaam" name="senaniNaam">
+                <option value="">चुनें</option>
+            </select>
+            <input type="text" id="nayaSenaniNaam" name="nayaSenaniNaam" placeholder="नया नाम जोड़ें" style="display: none;">
+            <button type="button" id="nayaSenaniButton">नया जोड़ें</button>
 
-        <label for="relation">संबंध:</label>
-        <select id="relation" name="relation" required onchange="showExtraFields(this.value)">
-            <option value="">संबंध चुनें</option>
-            <option value="पोता">पोता</option>
-            <option value="प्रपौत्र">प्रपौत्र</option>
-        </select>
+            <label for="sambandh">संबंध:</label>
+            <select id="sambandh" name="sambandh">
+                <option value="">चुनें</option>
+                <option value="पोता">पोता</option>
+                <option value="प्रपौत्र">प्रपौत्र</option>
+                </select>
 
-        <div id="extraFields"></div>
+            <div id="sambandhFields">
+                </div>
+        </fieldset>
 
-        <label for="successorName">उत्तराधिकारी का नाम:</label>
-        <input type="text" id="successorName" name="successorName" required>
+        <fieldset>
+            <legend>उत्तराधिकारी का विवरण</legend>
+            <label for="uttaradhikariNaam">उत्तराधिकारी का नाम:</label>
+            <input type="text" id="uttaradhikariNaam" name="uttaradhikariNaam">
 
-        <label for="successorState">उत्तराधिकारी का राज्य:</label>
-        <select id="successorState" name="successorState" required onchange="loadDivisions(this.value, 'successorDivision')">
-            <option value="">राज्य चुनें</option>
-        </select>
+            <label for="uttaradhikariRajya">राज्य:</label>
+            <select id="uttaradhikariRajya" name="uttaradhikariRajya">
+                <option value="">चुनें</option>
+                <option value="मध्य प्रदेश">मध्य प्रदेश</option>
+                </select>
 
-        <label for="successorDivision">संभाग:</label>
-        <select id="successorDivision" name="successorDivision" required onchange="loadDistricts(this.value, 'successorDistrict')">
-            <option value="">संभाग चुनें</option>
-        </select>
+            <label for="uttaradhikariSambhag">संभाग:</label>
+            <select id="uttaradhikariSambhag" name="uttaradhikariSambhag">
+                <option value="">चुनें</option>
+            </select>
 
-        <label for="successorDistrict">जिला:</label>
-        <select id="successorDistrict" name="successorDistrict" required>
-            <option value="">जिला चुनें</option>
-        </select>
+            <label for="uttaradhikariJila">जिला:</label>
+            <select id="uttaradhikariJila" name="uttaradhikariJila">
+                <option value="">चुनें</option>
+            </select>
 
-        <label for="mobile">मोबाइल नंबर:</label>
-        <input type="text" id="mobile" name="mobile" required>
+            <label for="mobileNumber">मोबाइल नंबर:</label>
+            <input type="tel" id="mobileNumber" name="mobileNumber">
 
-        <label for="address">पता:</label>
-        <textarea id="address" name="address" required></textarea>
+            <label for="address">पता:</label>
+            <textarea id="address" name="address"></textarea>
 
-        <label for="idNumber">पहचान क्रमांक:</label>
-        <input type="text" id="idNumber" name="idNumber">
+            <label for="anyInformation">अन्य जानकारी / पहचान क्रमांक:</label>
+            <textarea id="anyInformation" name="anyInformation"></textarea>
+        </fieldset>
 
         <button type="submit">सबमिट करें</button>
     </form>
-
     <script src="script.js"></script>
 </body>
 </html>
