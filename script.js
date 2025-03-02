@@ -1,109 +1,129 @@
-document.addEventListener("DOMContentLoaded", function () {
-    loadStates("state");
-    loadStates("successorState");
-});
-
-
-function loadStates(elementId) {
-    let states = ["उत्तर प्रदेश", "मध्य प्रदेश"]; // राज्य लिस्ट
-    let stateDropdown = document.getElementById(elementId);
-
-    if (stateDropdown) {  // अगर dropdown फॉर्म में है, तभी चले
-        stateDropdown.innerHTML = `<option value="">राज्य चुनें</option>`; // डिफ़ॉल्ट ऑप्शन
-
-        states.forEach(state => {
-            let option = document.createElement("option");
-            option.value = state;
-            option.textContent = state;
-            stateDropdown.appendChild(option);
-        });
-    }
-}
-
-function loadDivisions(state, divisionId) {
-    const divisions = {
-        "उत्तर प्रदेश": ["लखनऊ", "वाराणसी"],
-        "मध्य प्रदेश": ["भोपाल", "इंदौर"]
+document.addEventListener('DOMContentLoaded', function() {
+    const senaniRajya = document.getElementById('senaniRajya');
+    const senaniSambhag = document.getElementById('senaniSambhag');
+    const senaniJila = document.getElementById('senaniJila');
+    const senaniNaam = document.getElementById('senaniNaam');
+    const nayaSenaniNaam = document.getElementById('nayaSenaniNaam');
+    const nayaSenaniButton = document.getElementById('nayaSenaniButton');
+    const sambandh = document.getElementById('sambandh');
+    const sambandhFields = document.getElementById('sambandhFields');
+    const senaniData = {
+        'उत्तर प्रदेश': {
+            'लखनऊ': ['लखनऊ', 'कानपुर', 'बाराबंकी'],
+            'इलाहाबाद': ['इलाहाबाद', 'प्रयागराज', 'कौशाम्बी']
+            // और संभाग और जिले जोड़ें
+        },
+        // अन्य राज्यों के डेटा जोड़ें
     };
-    let divisionDropdown = document.getElementById(divisionId);
-    divisionDropdown.innerHTML = <option value="">संभाग चुनें</option>;
-    if (divisions[state]) {
-        divisions[state].forEach(division => {
-            let option = document.createElement("option");
-            option.value = division;
-            option.textContent = division;
-            divisionDropdown.appendChild(option);
+    const senaniNaamData = ['सेनानी 1', 'सेनानी 2', 'सेनानी 3']; // Google Sheets से लोड करें
+
+    // राज्य बदलने पर संभाग और जिले अपडेट करें
+    senaniRajya.addEventListener('change', function() {
+        const rajya = this.value;
+        senaniSambhag.innerHTML = '<option value="">चुनें</option>';
+        senaniJila.innerHTML = '<option value="">चुनें</option>';
+        if (rajya) {
+            Object.keys(senaniData[rajya]).forEach(sambhag => {
+                const option = document.createElement('option');
+                option.value = sambhag;
+                option.textContent = sambhag;
+                senaniSambhag.appendChild(option);
+            });
+        }
+    });
+
+    senaniSambhag.addEventListener('change', function() {
+        const rajya = senaniRajya.value;
+        const sambhag = this.value;
+        senaniJila.innerHTML = '<option value="">चुनें</option>';
+        if (rajya && sambhag) {
+            senaniData[rajya][sambhag].forEach(jila => {
+                const option = document.createElement('option');
+                option.value = jila;
+                option.textContent = jila;
+                senaniJila.appendChild(option);
+            });
+        }
+    });
+
+    // सेनानी नाम डेटा लोड करें
+    senaniNaamData.forEach(naam => {
+        const option = document.createElement('option');
+        option.value = naam;
+        option.textContent = naam;
+        senaniNaam.appendChild(option);
+    });
+
+    // नया सेनानी नाम जोड़ें
+    nayaSenaniButton.addEventListener('click', function() {
+        if (nayaSenaniNaam.style.display === 'none') {
+            nayaSenaniNaam.style.display = 'block';
+        } else {
+            const naam = nayaSenaniNaam.value;
+            if (naam) {
+                const option = document.createElement('option');
+                option.value = naam;
+                option.textContent = naam;
+                senaniNaam.appendChild(option);
+                nayaSenaniNaam.value = '';
+            }
+            nayaSenaniNaam.style.display = 'none';
+        }
+    });
+
+    // संबंध के अनुसार फ़ील्ड दिखाएँ
+    sambandh.addEventListener('change', function() {
+        const samb = this.value;
+        sambandhFields.innerHTML = '';
+        if (samb === 'पोता') {
+            const pitaNaam = document.createElement('input');
+            pitaNaam.type = 'text';
+            pitaNaam.placeholder = 'पिता का नाम';
+            sambandhFields.appendChild(pitaNaam);
+        } else if (samb === 'प्रपौत्र') {
+            const pitaNaam = document.createElement('input');
+            pitaNaam.type = 'text';
+            pitaNaam.placeholder = 'पिता का नाम';
+            sambandhFields.appendChild(pitaNaam);
+
+            const dadaNaam = document.createElement('input');
+            dadaNaam.type = 'text';
+            dadaNaam.placeholder = 'दादा का नाम';
+            sambandhFields.appendChild(dadaNaam);
+        }
+    });
+
+    // फ़ॉर्म सबमिट करने पर डेटा Google Sheets में सेव करें (यहाँ Google Apps Script की आवश्यकता होगी)
+ const form = document.getElementById('senaniForm');
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // डिफ़ॉल्ट सबमिशन को रोकें
+
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
         });
-    }
-}
 
-function loadDistricts(division, districtId) {
-    const districts = {
-        "लखनऊ": ["लखनऊ", "बाराबंकी"],
-        "वाराणसी": ["वाराणसी", "चंदौली"],
-        "भोपाल": ["भोपाल", "सीहोर"],
-        "इंदौर": ["इंदौर", "उज्जैन"]
-    };
-    let districtDropdown = document.getElementById(districtId);
-    districtDropdown.innerHTML = <option value="">जिला चुनें</option>;
-    if (districts[division]) {
-        districts[division].forEach(district => {
-            let option = document.createElement("option");
-            option.value = district;
-            option.textContent = district;
-            districtDropdown.appendChild(option);
+        // Google Apps Script वेब ऐप URL
+        const scriptUrl = "https://script.google.com/macros/s/AKfycbxgMH2qwUZ1LorvfD-zaxQSd3OcLkmDNr4SjouRzCb7S4nItO2eun9xiXtO42p_cqYg/exec";
+
+        fetch(scriptUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            console.log('डेटा सफलतापूर्वक सबमिट किया गया:', response);
+            alert("डेटा सफलतापूर्वक सबमिट किया गया");
+            form.reset(); // फॉर्म को रीसेट करें
+        })
+        .catch(error => {
+            console.error('डेटा सबमिट करने में त्रुटि:', error);
+            alert("डेटा सबमिट करने में त्रुटि आई");
         });
-    }
-}
-
-function loadFighterNames() {
-    google.script.run.withSuccessHandler(fighters => {
-        let fighterDropdown = document.getElementById("fighterName");
-        fighterDropdown.innerHTML = <option value="">सेनानी चुनें</option>;
-        fighters.forEach(fighter => {
-            let option = document.createElement("option");
-            option.value = fighter;
-            option.textContent = fighter;
-            fighterDropdown.appendChild(option);
-        });
-    }).getFighterNames();
-}
-
-function loadFighterData(fighterName) {
-    if (fighterName) {
-        google.script.run.withSuccessHandler(data => {
-            console.log("सेनानी डेटा:", data);
-        }).getFighterDetails(fighterName);
-    }
-}
-
-function showExtraFields(relation) {
-    let extraFields = document.getElementById("extraFields");
-    extraFields.innerHTML = "";
-    
-    if (relation === "प्रपौत्र") {
-        extraFields.innerHTML = `
-            <label for="fatherName">पिता का नाम:</label>
-            <input type="text" id="fatherName" name="fatherName" required>
-            <label for="grandfatherName">दादा का नाम:</label>
-            <input type="text" id="grandfatherName" name="grandfatherName" required>
-        `;
-    } else if (relation === "पोता") {
-        extraFields.innerHTML = `
-            <label for="fatherName">पिता का नाम:</label>
-            <input type="text" id="fatherName" name="fatherName" required>
-        `;
-    }
-}
-
-document.getElementById("freedomFighterForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-    let formData = new FormData(this);
-    let data = {};
-    formData.forEach((value, key) => data[key] = value);
-    
-    google.script.run.withSuccessHandler(response => {
-        alert("डेटा सफलतापूर्वक सेव हुआ!");
-        document.getElementById("freedomFighterForm").reset();
-    }).saveFormData(data);
+    });
 });
