@@ -1,18 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
     loadStates("state");
     loadStates("successorState");
-    loadFighterNames();
 });
 
 function loadStates(elementId) {
-    const states = ["उत्तर प्रदेश", "मध्य प्रदेश"];
+    let states = ["उत्तर प्रदेश", "मध्य प्रदेश"]; // राज्य लिस्ट
     let stateDropdown = document.getElementById(elementId);
-    states.forEach(state => {
-        let option = document.createElement("option");
-        option.value = state;
-        option.textContent = state;
-        stateDropdown.appendChild(option);
-    });
+
+    if (stateDropdown) {  // अगर dropdown फॉर्म में है, तभी चले
+        stateDropdown.innerHTML = `<option value="">राज्य चुनें</option>`; // डिफ़ॉल्ट ऑप्शन
+
+        states.forEach(state => {
+            let option = document.createElement("option");
+            option.value = state;
+            option.textContent = state;
+            stateDropdown.appendChild(option);
+        });
+    }
 }
 
 function loadDivisions(state, divisionId) {
