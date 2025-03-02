@@ -1,117 +1,68 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>स्वतंत्रता सेनानी उत्तराधिकारी पंजीकरण</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-<link href="https://ai-public.creatie.ai/gen_page/tailwind-custom-v2.css" rel="stylesheet"><script src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
-<script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000" data-border-radius="small"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>स्वतंत्रता सेनानी उत्तराधिकारी पंजीकरण</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-50">
-<div class="max-w-[375px] mx-auto min-h-screen pb-16">
-<header class="bg-custom px-4 py-3 fixed w-full max-w-[375px] top-0 z-50"><div class="flex items-center justify-between">
-<h1 class="text-white text-lg font-bold">स्वतंत्रता सेनानी उत्तराधिकारी पंजीकरण</h1></div>
-</header>
+<body>
 
-<main class="mt-14 px-4">
-<nav class="flex gap-2 mb-6 sticky top-14 bg-white z-40 py-2">
-<button class="flex-1 py-2 bg-custom text-white font-medium !rounded-button">फॉर्म भरें</button>
-<button class="flex-1 py-2 bg-white border border-custom text-custom font-medium !rounded-button">डेटा खोजें</button>
-</nav>
+<div class="container">
+    <h1>स्वतंत्रता सेनानी उत्तराधिकारी पंजीकरण</h1>
+    <form id="registrationForm">
+        <h2>स्वतंत्रता सेनानी विवरण</h2>
 
-<form class="space-y-6">
-<div class="bg-white p-4 rounded-lg shadow-sm">
-<h2 class="text-lg font-bold mb-4">स्वतंत्रता सेनानी विवरण</h2>
-<div class="space-y-4">
-<div>
-<label class="block text-sm font-medium mb-1">राज्य</label>
-<select class="w-full border border-gray-200 rounded-lg p-2 text-sm">
-<option>चुनें</option>
+        <label>राज्य</label>
+        <select id="state" required>
+            <option value="">चुनें</option>
+            <option value="नया">नया राज्य जोड़ें</option>
+            <option value="मध्य प्रदेश">मध्य प्रदेश</option>
+            <option value="उत्तर प्रदेश">उत्तर प्रदेश</option>
+            <option value="छत्तीसगढ़">छत्तीसगढ़</option>
+            <option value="महाराष्ट्र">महाराष्ट्र</option>
+        </select>
 
-</select>
-</div>
-<div>
-<label class="block text-sm font-medium mb-1">संभाग</label>
-<select class="w-full border border-gray-200 rounded-lg p-2 text-sm">
-<option>चुनें</option>
+        <label>संभाग</label>
+        <select id="division" required>
+            <option value="">चुनें</option>
+        </select>
 
-</select>
-</div>
-<div>
-<label class="block text-sm font-medium mb-1">जिला</label><select class="w-full border border-gray-200 rounded-lg p-2 text-sm">
+        <label>जिला</label>
+        <select id="district" required>
+            <option value="">चुनें</option>
+        </select>
 
-<option>चुनें</option>
+        <label>स्वतंत्रता सेनानी का नाम</label>
+        <input type="text" id="freedomFighter" placeholder="नाम दर्ज करें" required>
 
-</select>
-</div>
-<div>
-<label class="block text-sm font-medium mb-1">स्वतंत्रता सेनानी का नाम</label>
-<option>चुनें</option>
-<option>सेनानी का नाम दर्ज करें</option>
-<input type="text" class="w-full border border-gray-200 rounded-lg p-2 text-sm" placeholder="नाम दर्ज करें"></div>
-</div>
-</div>
+        <h2>उत्तराधिकारी विवरण</h2>
 
-<div class="bg-white p-4 rounded-lg shadow-sm">
-<h2 class="text-lg font-bold mb-4">उत्तराधिकारी विवरण</h2><div class="space-y-4">
-<div>
-<label class="block text-sm font-medium mb-1">नाम</label>
-<input type="text" class="w-full border border-gray-200 rounded-lg p-2 text-sm" placeholder="नाम दर्ज करें"></div>
-<div>
-<label class="block text-sm font-medium mb-1">स्वतंत्रता सेनानी से संबंध</label><select class="w-full border border-gray-200 rounded-lg p-2 text-sm">
-<option>चुनें</option>
-<option>पुत्री</option><option>पौत्र</option>
-<option>पौत्री</option>
-</select>
-</div>
-<div>
-<label class="block text-sm font-medium mb-1">मोबाइल नंबर</label>
-<input type="tel" class="w-full border border-gray-200 rounded-lg p-2 text-sm" placeholder="मोबाइल नंबर दर्ज करें"></div>
-<div>
-<label class="block text-sm font-medium mb-1">राज्य</label>
-<select class="w-full border border-gray-200 rounded-lg p-2 text-sm">
-<option>चुनें</option>>
-</select>
-</div>
-<div>
-<label class="block text-sm font-medium mb-1">संभाग</label>
-<select class="w-full border border-gray-200 rounded-lg p-2 text-sm">
-<option>चुनें</option>
+        <label>नाम</label>
+        <input type="text" id="successorName" placeholder="नाम दर्ज करें" required>
 
-</select>
-</div>
-<div>
+        <label>संबंध</label>
+        <select id="relation" required>
+            <option value="">चुनें</option>
+            <option value="पुत्र">पुत्र</option>
+            <option value="पुत्र बधू">पुत्र बधू</option>
+            <option value="पोता">पोता</option>
+            <option value="पोता बहु">पोता बहु</option>
+        </select>
 
-<label class="block text-sm font-medium mb-1">जिला</label>
-<select class="w-full border border-gray-200 rounded-lg p-2 text-sm">
-<option>चुनें</option>
+        <label>मोबाइल नंबर</label>
+        <input type="tel" id="mobile" placeholder="मोबाइल नंबर दर्ज करें" required>
 
-</select>
-</div>
-  
-  <div>
-<label class="block text-sm font-medium mb-1">पता</label>
-<textarea class="w-full border border-gray-200 rounded-lg p-2 text-sm h-20" placeholder="पूरा पता दर्ज करें"></textarea>
-</div>
-<div>
-<label class="block text-sm font-medium mb-1">पहचान क्रमांक</label>
-<input type="text" class="w-full border border-gray-200 rounded-lg p-2 text-sm" placeholder="पहचान क्रमांक दर्ज करें"></div>
-</div>
+        <label>पता</label>
+        <textarea id="address" placeholder="पूरा पता दर्ज करें" required></textarea>
+
+        <label>पहचान क्रमांक</label>
+        <input type="text" id="idNumber" placeholder="पहचान क्रमांक दर्ज करें" required>
+
+        <button type="submit">फॉर्म जमा करें</button>
+    </form>
 </div>
 
-<div class="bg-white p-4 rounded-lg shadow-sm">
-<h2 class="text-lg font-bold mb-4">फोटो अपलोड</h2><div class="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center">
-<i class="fas fa-camera text-3xl text-gray-400 mb-2"></i>
-<p class="text-sm text-gray-500">सेल्फी अपलोड करने के लिए यहाँ क्लिक करें</p><input type="file" accept="image/*" class="hidden" id="selfie">
-<button type="button" onclick="document.getElementById('selfie').click()" class="mt-2 bg-custom text-white px-4 py-2 text-sm font-medium !rounded-button">फोटो चुनें</button>
-</div>
-</div>
-
-<button type="submit" class="w-full bg-custom text-white py-3 font-medium !rounded-button">फॉर्म जमा करें</button>
-</form>
-</main>
-
-
-</div>
+<script src="script.js"></script>
 </body>
 </html>
