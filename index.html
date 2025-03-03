@@ -1,96 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>सेनानी उत्तराधिकारी फॉर्म</title>
-  <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>सेनानी उत्तराधिकारी फॉर्म</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>सेनानी उत्तराधिकारी फॉर्म</h1>
-  <form id="senaniForm">
-    <fieldset>
-      <legend>सेनानी का विवरण</legend>
-      <label for="senaniRajya">राज्य:</label>
-      <select id="senaniRajya" name="senaniRajya">
-        <option value="">चुनें</option>
-      </select>
-      <button type="button" id="addSenaniRajya">नया जोड़ें</button>
-      <input type="text" id="newSenaniRajya" name="newSenaniRajya" placeholder="नया राज्य जोड़ें" style="display: none;">
+    <div class="container">
+        <h1>सेनानी उत्तराधिकारी फॉर्म</h1>
+        <form id="senaniForm">
+            <fieldset>
+                <legend>सेनानी का विवरण</legend>
+                <div class="form-group">
+                    <label for="senaniRajya">राज्य:</label>
+                    <select id="senaniRajya" name="senaniRajya"></select>
+                    <button type="button" class="add-button" id="addSenaniRajya">नया जोड़ें</button>
+                    <input type="text" id="newSenaniRajya" name="newSenaniRajya" placeholder="नया राज्य जोड़ें" style="display: none;">
+                </div>
+                </fieldset>
 
-      <label for="senaniSambhag">संभाग:</label>
-      <select id="senaniSambhag" name="senaniSambhag">
-        <option value="">चुनें</option>
-      </select>
-      <button type="button" id="addSenaniSambhag">नया जोड़ें</button>
-      <input type="text" id="newSenaniSambhag" name="newSenaniSambhag" placeholder="नया संभाग जोड़ें" style="display: none;">
+            <fieldset>
+                <legend>उत्तराधिकारी का विवरण</legend>
+                <div class="form-group">
+                    <label for="uttaradhikariNaam">उत्तराधिकारी का नाम:</label>
+                    <input type="text" id="uttaradhikariNaam" name="uttaradhikariNaam">
+                </div>
 
-      <label for="senaniJila">जिला:</label>
-      <select id="senaniJila" name="senaniJila">
-        <option value="">चुनें</option>
-      </select>
-      <button type="button" id="addSenaniJila">नया जोड़ें</button>
-      <input type="text" id="newSenaniJila" name="newSenaniJila" placeholder="नया जिला जोड़ें" style="display: none;">
+                <div class="form-group">
+                    <label for="mobileNumber">मोबाइल नंबर:</label>
+                    <input type="tel" id="mobileNumber" name="mobileNumber">
+                </div>
 
-      <label for="senaniNaam">सेनानी का नाम:</label>
-      <select id="senaniNaam" name="senaniNaam">
-        <option value="">चुनें</option>
-      </select>
-      <button type="button" id="addSenaniNaam">नया जोड़ें</button>
-      <input type="text" id="newSenaniNaam" name="newSenaniNaam" placeholder="नया नाम जोड़ें" style="display: none;">
+                <div class="form-group">
+                    <label for="uttaradhikariRajya">राज्य:</label>
+                    <select id="uttaradhikariRajya" name="uttaradhikariRajya"></select>
+                    <button type="button" class="add-button" id="addUttaradhikariRajya">नया जोड़ें</button>
+                    <input type="text" id="newUttaradhikariRajya" name="newUttaradhikariRajya" placeholder="नया राज्य जोड़ें" style="display: none;">
+                </div>
 
-      <label for="sambandh">संबंध:</label>
-      <select id="sambandh" name="sambandh">
-        <option value="">चुनें</option>
-        <option value="पुत्र">पुत्र</option>
-        <option value="पुत्री">पुत्री</option>
-        <option value="पोता">पोता</option>
-        <option value="प्रपौत्र">प्रपौत्र</option>
-        </select>
+                <div class="form-group">
+                    <label for="uttaradhikariSambhag">संभाग:</label>
+                    <select id="uttaradhikariSambhag" name="uttaradhikariSambhag"></select>
+                    <button type="button" class="add-button" id="addUttaradhikariSambhag">नया जोड़ें</button>
+                    <input type="text" id="newUttaradhikariSambhag" name="newUttaradhikariSambhag" placeholder="नया संभाग जोड़ें" style="display: none;">
+                </div>
 
-      <div id="extraFields">
-      </div>
-    </fieldset>
+                <div class="form-group">
+                    <label for="uttaradhikariJila">जिला:</label>
+                    <select id="uttaradhikariJila" name="uttaradhikariJila"></select>
+                    <button type="button" class="add-button" id="addUttaradhikariJila">नया जोड़ें</button>
+                    <input type="text" id="newUttaradhikariJila" name="newUttaradhikariJila" placeholder="नया जिला जोड़ें" style="display: none;">
+                </div>
 
-    <fieldset>
-      <legend>उत्तराधिकारी का विवरण</legend>
-      <label for="uttaradhikariNaam">उत्तराधिकारी का नाम:</label>
-      <input type="text" id="uttaradhikariNaam" name="uttaradhikariNaam">
+                <div class="form-group">
+                    <label for="address">पता:</label>
+                    <textarea id="address" name="address"></textarea>
+                </div>
 
-      <label for="uttaradhikariRajya">राज्य:</label>
-      <select id="uttaradhikariRajya" name="uttaradhikariRajya">
-        <option value="">चुनें</option>
-      </select>
-      <button type="button" id="addUttaradhikariRajya">नया जोड़ें</button>
-      <input type="text" id="newUttaradhikariRajya" name="newUttaradhikariRajya" placeholder="नया राज्य जोड़ें" style="display: none;">
+                <div class="form-group">
+                    <label for="anyInformation">अतिरिक्त जानकारी/क्रमांक:</label>
+                    <textarea id="anyInformation" name="anyInformation"></textarea>
+                </div>
+            </fieldset>
 
-      <label for="uttaradhikariSambhag">संभाग:</label>
-      <select id="uttaradhikariSambhag" name="uttaradhikariSambhag">
-        <option value="">चुनें</option>
-      </select>
-      <button type="button" id="addUttaradhikariSambhag">नया जोड़ें</button>
-      <input type="text" id="newUttaradhikariSambhag" name="newUttaradhikariSambhag" placeholder="नया संभाग जोड़ें" style="display: none;">
-
-      <label for="uttaradhikariJila">जिला:</label>
-      <select id="uttaradhikariJila" name="uttaradhikariJila">
-        <option value="">चुनें</option>
-      </select>
-      <button type="button" id="addUttaradhikariJila">नया जोड़ें</button>
-      <input type="text" id="newUttaradhikariJila" name="newUttaradhikariJila" placeholder="नया जिला जोड़ें" style="display: none;">
-
-      <label for="mobileNumber">मोबाइल नंबर:</label>
-      <input type="tel" id="mobileNumber" name="mobileNumber">
-
-      <label for="address">पता:</label>
-      <textarea id="address" name="address"></textarea>
-
-      <label for="anyInformation">अन्य जानकारी / पहचान क्रमांक:</label>
-      <textarea id="anyInformation" name="anyInformation"></textarea>
-
-      <label for="photoLink">फोटो लिंक:</label>
-      <input type="text" id="photoLink" name="photoLink">
-    </fieldset>
-
-    <button type="submit">सबमिट करें</button>
-  </form>
-  <script src="script.js"></script>
+            <button type="submit" class="submit-button">सबमिट करें</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
