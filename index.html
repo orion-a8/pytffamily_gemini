@@ -1,70 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>सेनानी उत्तराधिकारी फॉर्म</title>
+    <title>स्वतंत्रता सेनानी उत्तराधिकारी पंजीयन</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>सेनानी उत्तराधिकारी फॉर्म</h1>
-        <form id="senaniForm">
-            <fieldset>
-                <legend>सेनानी का विवरण</legend>
+        <h1>स्वतंत्रता सेनानी उत्तराधिकारी परिवार पंजीयन</h1>
+        <form id="registrationForm">
+            <!-- सेनानी का विवरण -->
+            <div class="form-section">
+                <h2>सेनानी का विवरण</h2>
+                
                 <div class="form-group">
-                    <label for="senaniRajya">राज्य:</label>
-                    <select id="senaniRajya" name="senaniRajya"></select>
-                    <button type="button" class="add-button" id="addSenaniRajya">नया जोड़ें</button>
-                    <input type="text" id="newSenaniRajya" name="newSenaniRajya" placeholder="नया राज्य जोड़ें" style="display: none;">
-                </div>
-                </fieldset>
-
-            <fieldset>
-                <legend>उत्तराधिकारी का विवरण</legend>
-                <div class="form-group">
-                    <label for="uttaradhikariNaam">उत्तराधिकारी का नाम:</label>
-                    <input type="text" id="uttaradhikariNaam" name="uttaradhikariNaam">
+                    <label>राज्य:</label>
+                    <select id="ffState" class="state-select" required>
+                        <option value="">चुनें</option>
+                        <option>उत्तर प्रदेश</option>
+                        <option>मध्य प्रदेश</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="mobileNumber">मोबाइल नंबर:</label>
-                    <input type="tel" id="mobileNumber" name="mobileNumber">
+                    <label>संभाग:</label>
+                    <select id="ffDivision" class="division-select" required disabled>
+                        <option value="">पहले राज्य चुनें</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="uttaradhikariRajya">राज्य:</label>
-                    <select id="uttaradhikariRajya" name="uttaradhikariRajya"></select>
-                    <button type="button" class="add-button" id="addUttaradhikariRajya">नया जोड़ें</button>
-                    <input type="text" id="newUttaradhikariRajya" name="newUttaradhikariRajya" placeholder="नया राज्य जोड़ें" style="display: none;">
+                    <label>जिला:</label>
+                    <select id="ffDistrict" class="district-select" required disabled>
+                        <option value="">पहले संभाग चुनें</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="uttaradhikariSambhag">संभाग:</label>
-                    <select id="uttaradhikariSambhag" name="uttaradhikariSambhag"></select>
-                    <button type="button" class="add-button" id="addUttaradhikariSambhag">नया जोड़ें</button>
-                    <input type="text" id="newUttaradhikariSambhag" name="newUttaradhikariSambhag" placeholder="नया संभाग जोड़ें" style="display: none;">
+                    <label>सेनानी का नाम:</label>
+                    <select id="fighterName" required>
+                        <option value="">चुनें</option>
+                        <!-- Google Sheet से डेटा JavaScript द्वारा भरा जाएगा -->
+                    </select>
+                    <input type="text" id="newFighterName" placeholder="नया नाम जोड़ें" style="display: none;">
+                </div>
+            </div>
+
+            <!-- उत्तराधिकारी का विवरण -->
+            <div class="form-section">
+                <h2>उत्तराधिकारी का विवरण</h2>
+
+                <div class="form-group">
+                    <label>संबंध:</label>
+                    <select id="relationship" required>
+                        <option value="">चुनें</option>
+                        <option>पुत्र</option>
+                        <option>पुत्री</option>
+                        <option>दामाद</option>
+                        <option>पोता</option>
+                        <option>प्रपौत्र</option>
+                    </select>
+                </div>
+
+                <div id="relationFields"></div>
+
+                <div class="form-group">
+                    <label>उत्तराधिकारी का नाम:</label>
+                    <input type="text" id="heirName" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="uttaradhikariJila">जिला:</label>
-                    <select id="uttaradhikariJila" name="uttaradhikariJila"></select>
-                    <button type="button" class="add-button" id="addUttaradhikariJila">नया जोड़ें</button>
-                    <input type="text" id="newUttaradhikariJila" name="newUttaradhikariJila" placeholder="नया जिला जोड़ें" style="display: none;">
+                    <label>मोबाइल नंबर:</label>
+                    <input type="tel" id="mobile" pattern="[0-9]{10}" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="address">पता:</label>
-                    <textarea id="address" name="address"></textarea>
+                    <label>राज्य:</label>
+                    <select id="heirState" class="state-select" required>
+                        <option value="">चुनें</option>
+                        <option>उत्तर प्रदेश</option>
+                        <option>मध्य प्रदेश</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="anyInformation">अतिरिक्त जानकारी/क्रमांक:</label>
-                    <textarea id="anyInformation" name="anyInformation"></textarea>
+                    <label>संभाग:</label>
+                    <select id="heirDivision" class="division-select" required disabled>
+                        <option value="">पहले राज्य चुनें</option>
+                    </select>
                 </div>
-            </fieldset>
 
-            <button type="submit" class="submit-button">सबमिट करें</button>
+                <div class="form-group">
+                    <label>जिला:</label>
+                    <select id="heirDistrict" class="district-select" required disabled>
+                        <option value="">पहले संभाग चुनें</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>पता:</label>
+                    <textarea id="address" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>अन्य जानकारी / पहचान क्रमांक:</label>
+                    <input type="text" id="additionalInfo">
+                </div>
+            </div>
+
+            <button type="submit">सबमिट करें</button>
         </form>
+        <div id="message"></div>
     </div>
     <script src="script.js"></script>
 </body>
