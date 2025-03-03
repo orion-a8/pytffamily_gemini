@@ -1,47 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
   
-const uttaradhikariRajya = document.getElementById('uttaradhikariRajya');
-  const uttaradhikariSambhag = document.getElementById('uttaradhikariSambhag');
-  const uttaradhikariJila = document.getElementById('uttaradhikariJila');
-
-  // उत्तराधिकारी के राज्य लोड करें
-  Object.keys(locationData).forEach(rajya => {
-    const option = document.createElement('option');
-    option.value = rajya;
-    option.textContent = rajya;
-    uttaradhikariRajya.appendChild(option);
-  });
-
-  // उत्तराधिकारी के संभाग अपडेट करें
-  uttaradhikariRajya.addEventListener('change', function() {
-    const rajya = this.value;
-    uttaradhikariSambhag.innerHTML = '<option value="">चुनें</option>';
-    uttaradhikariJila.innerHTML = '<option value="">चुनें</option>';
-    if (rajya) {
-      Object.keys(locationData[rajya]).forEach(sambhag => {
-        const option = document.createElement('option');
-        option.value = sambhag;
-        option.textContent = sambhag;
-        uttaradhikariSambhag.appendChild(option);
-      });
-    }
-  });
-
-  // उत्तराधिकारी के जिले अपडेट करें
-  uttaradhikariSambhag.addEventListener('change', function() {
-    const rajya = uttaradhikariRajya.value;
-    const sambhag = this.value;
-    uttaradhikariJila.innerHTML = '<option value="">चुनें</option>';
-    if (rajya && sambhag) {
-      locationData[rajya][sambhag].forEach(jila => {
-        const option = document.createElement('option');
-        option.value = jila;
-        option.textContent = jila;
-        uttaradhikariJila.appendChild(option);
-      });
-    }
-  });
-
 const senaniRajya = document.getElementById('senaniRajya');
   const senaniSambhag = document.getElementById('senaniSambhag');
   const senaniJila = document.getElementById('senaniJila');
