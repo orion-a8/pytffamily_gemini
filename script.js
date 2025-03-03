@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
   addNewLocation('addUttaradhikariJila', 'newUttaradhikariJila', uttaradhikariJila, 'जिला');
 
   // Google Sheet से सेनानी नाम लोड करें (उदाहरण)
-  fetch('https://script.google.com/macros/s/AKfycbxEjrftF-RoB_O64Sv_eNbjY2_cDdk51QKhe275Sry6rWbJxu5FLPw9BLINuR2x9J6m/exec?action=getSenaniNames')
+  fetch('1Ij9SBzOSedgdD_dM1iKqZsPExLIxn9usPkbgV_MLFg8" sheet name "data Sheet8" , "https://script.google.com/macros/s/AKfycbxxqVUteIWtcd_A0XfFh2wq8A4lI5iVNC3RUIzt_5yomTpBgaqxezF4jMZGssRacqJM/exec')
     .then(response => response.json())
     .then(data => {
       data.forEach(naam => {
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Google Apps Script वेब ऐप URL
-    const scriptUrl = 'https://script.google.com/macros/s/AKfycbxEjrftF-RoB_O64Sv_eNbjY2_cDdk51QKhe275Sry6rWbJxu5FLPw9BLINuR2x9J6m/exec';
+    const scriptUrl = '1Ij9SBzOSedgdD_dM1iKqZsPExLIxn9usPkbgV_MLFg8" sheet name "data Sheet8" , "https://script.google.com/macros/s/AKfycbxxqVUteIWtcd_A0XfFh2wq8A4lI5iVNC3RUIzt_5yomTpBgaqxezF4jMZGssRacqJM/exec';
 
     fetch(scriptUrl, {
       method: 'POST',
