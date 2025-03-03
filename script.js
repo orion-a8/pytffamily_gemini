@@ -1,186 +1,139 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const senaniRajya = document.getElementById('senaniRajya');
-  const senaniSambhag = document.getElementById('senaniSambhag');
-  const senaniJila = document.getElementById('senaniJila');
-  const senaniNaam = document.getElementById('senaniNaam');
-  const sambandh = document.getElementById('sambandh');
-  const extraFields = document.getElementById('extraFields');
-
-  const uttaradhikariRajya = document.getElementById('uttaradhikariRajya');
-  const uttaradhikariSambhag = document.getElementById('uttaradhikariSambhag');
-  const uttaradhikariJila = document.getElementById('uttaradhikariJila');
-
-  // राज्य, संभाग, जिला डेटा (उदाहरण)
-  const locationData = {
-    'उत्तर प्रदेश': {
-      'लखनऊ': ['लखनऊ', 'कानपुर', 'बाराबंकी'],
-      'इलाहाबाद': ['इलाहाबाद', 'प्रयागराज', 'कौशाम्बी']
-    },
-    'मध्य प्रदेश': {
-      'भोपाल': ['भोपाल', 'सीहोर', 'रायसेन'],
-      'इंदौर': ['इंदौर', 'धार', 'खरगोन']
-    }
-  };
-
-  // ड्रॉप-डाउन में राज्य लोड करें
-  function loadStates(selectElement) {
-    Object.keys(locationData).forEach(rajya => {
-      const option = document.createElement('option');
-      option.value = rajya;
-      option.textContent = rajya;
-      selectElement.appendChild(option);
-    });
-  }
-
-  loadStates(senaniRajya);
-  loadStates(uttaradhikariRajya);
-
-  // राज्य बदलने पर संभाग अपडेट करें
-  function updateSambhag(rajyaSelect, sambhagSelect, jilaSelect) {
-    rajyaSelect.addEventListener('change', function() {
-      const rajya = this.value;
-      sambhagSelect.innerHTML = '<option value="">चुनें</option>';
-      jilaSelect.innerHTML = '<option value="">चुनें</option>';
-      if (rajya) {
-        Object.keys(locationData[rajya]).forEach(sambhag => {
-          const option = document.createElement('option');
-          option.value = sambhag;
-          option.textContent = sambhag;
-          sambhagSelect.appendChild(option);
-        });
-      }
-    });
-  }
-
-  updateSambhag(senaniRajya, senaniSambhag, senaniJila);
-  updateSambhag(uttaradhikariRajya, uttaradhikariSambhag, uttaradhikariJila);
-
-  // संभाग बदलने पर जिले अपडेट करें
-  function updateJila(sambhagSelect, jilaSelect, rajyaSelect) {
-    sambhagSelect.addEventListener('change', function() {
-      const rajya = rajyaSelect.value;
-      const sambhag = this.value;
-      jilaSelect.innerHTML = '<option value="">चुनें</option>';
-      if (rajya && sambhag) {
-        locationData[rajya][sambhag].forEach(jila => {
-          const option = document.createElement('option');
-          option.value = jila;
-          option.textContent = jila;
-          jilaSelect.appendChild(option);
-        });
-      }
-    });
-  }
-
-  updateJila(senaniSambhag, senaniJila, senaniRajya);
-  updateJila(uttaradhikariSambhag, uttaradhikariJila, uttaradhikariRajya);
-
-  // नया राज्य/संभाग/जिला जोड़ें (उदाहरण)
-  function addNewLocation(addButtonId, newInputId, selectElement, locationType) {
-    document.getElementById(addButtonId).addEventListener('click', function() {
-      const newInput = document.getElementById(newInputId);
-      if (newInput.style.display === 'none') {
-        newInput.style.display = 'block';
-      } else {
-        const newValue = newInput.value;
-        if (newValue) {
-          const option = document.createElement('option');
-          option.value = newValue;
-          option.textContent = newValue;
-          selectElement.appendChild(option);
-          // Google Sheet में नया स्थान जोड़ने के लिए Google Apps Script फ़ंक्शन को कॉल करें
+document.addEventListener('DOMContentLoaded', () => {
+    // राज्य, संभाग और जिला डेटा
+    const stateDivisionData = {
+        'उत्तर प्रदेश': {
+            'लखनऊ': ['लखनऊ', 'रायबरेली', 'हरदोई'],
+            'कानपुर': ['कानपुर नगर', 'कानपुर देहात', 'फतेहपुर'],
+            'मेरठ': ['मेरठ', 'गाजियाबाद', 'बागपत']
+        },
+        'मध्य प्रदेश': {
+            'भोपाल': ['भोपाल', 'विदिशा', 'रायसेन'],
+            'इंदौर': ['इंदौर', 'उज्जैन', 'देवास'],
+            'जबलपुर': ['जबलपुर', 'कटनी', 'मंडला']
         }
-        newInput.style.display = 'none';
-      }
-    });
-  }
+    };
 
-  addNewLocation('addSenaniRajya', 'newSenaniRajya', senaniRajya, 'राज्य');
-  addNewLocation('addSenaniSambhag', 'newSenaniSambhag', senaniSambhag, 'संभाग');
-  addNewLocation('addSenaniJila', 'newSenaniJila', senaniJila, 'जिला');
-  addNewLocation('addUttaradhikariRajya', 'newUttaradhikariRajya', uttaradhikariRajya, 'राज्य');
-  addNewLocation('addUttaradhikariSambhag', 'newUttaradhikariSambhag', uttaradhikariSambhag, 'संभाग');
-  addNewLocation('addUttaradhikariJila', 'newUttaradhikariJila', uttaradhikariJila, 'जिला');
+    // डायनामिक ड्रॉपडाउन फंक्शन
+    function setupDropdowns(stateSelectId, divisionSelectId, districtSelectId) {
+        const stateSelect = document.getElementById(stateSelectId);
+        const divisionSelect = document.getElementById(divisionSelectId);
+        const districtSelect = document.getElementById(districtSelectId);
 
-  // Google Sheet से सेनानी नाम लोड करें (उदाहरण)
-  fetch('1Ij9SBzOSedgdD_dM1iKqZsPExLIxn9usPkbgV_MLFg8" sheet name "data Sheet8" , "https://script.google.com/macros/s/AKfycbxxqVUteIWtcd_A0XfFh2wq8A4lI5iVNC3RUIzt_5yomTpBgaqxezF4jMZGssRacqJM/exec')
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(naam => {
-        const option = document.createElement('option');
-        option.value = naam;
-        option.textContent = naam;
-        senaniNaam.appendChild(option);
-      });
-    })
-    .catch(error => console.error('सेनानी नाम लोड करने में त्रुटि:', error));
+        stateSelect.addEventListener('change', () => {
+            divisionSelect.innerHTML = '<option value="">चुनें</option>';
+            districtSelect.innerHTML = '<option value="">चुनें</option>';
+            
+            if (stateSelect.value) {
+                divisionSelect.disabled = false;
+                const divisions = Object.keys(stateDivisionData[stateSelect.value]);
+                divisions.forEach(div => {
+                    divisionSelect.innerHTML += <option>${div}</option>;
+                });
+            } else {
+                divisionSelect.disabled = true;
+                districtSelect.disabled = true;
+            }
+        });
 
-  // नया सेनानी नाम जोड़ें (उदाहरण)
-  document.getElementById('addSenaniNaam').addEventListener('click', function() {
-    const newSenaniNaamInput = document.getElementById('newSenaniNaam');
-    if (newSenaniNaamInput.style.display === 'none') {
-      newSenaniNaamInput.style.display = 'block';
-    } else {
-      const newSenaniNaam = newSenaniNaamInput.value;
-      if (newSenaniNaam) {
-        const option = document.createElement('option');
-        option.value = newSenaniNaam;
-        option.textContent = newSenaniNaam;
-        senaniNaam.appendChild(option);
-        // Google Sheet में नया सेनानी नाम जोड़ने के लिए Google Apps Script फ़ंक्शन को कॉल करें
-      }
-      newSenaniNaamInput.style.display = 'none';
-    }
-  });
-
-  // संबंध के अनुसार अतिरिक्त फ़ील्ड दिखाएँ
-  sambandh.addEventListener('change', function() {
-    const selectedSambandh = this.value;
-    extraFields.innerHTML = ''; // पहले सभी अतिरिक्त फ़ील्ड हटाएं
-
-    if (selectedSambandh === 'पोता' || selectedSambandh === 'प्रपौत्र') {
-      const pitaNaamLabel = document.createElement('label');
-      pitaNaamLabel.textContent = 'पिता का नाम:';
-      extraFields.appendChild(pitaNaamLabel);
-
-      const pitaNaamInput = document.createElement('input');
-      pitaNaamInput.type = 'text';
-      pitaNaamInput.name = 'pitaNaam';
-      extraFields.appendChild(pitaNaamInput);
+        divisionSelect.addEventListener('change', () => {
+            districtSelect.innerHTML = '<option value="">चुनें</option>';
+            
+            if (divisionSelect.value) {
+                districtSelect.disabled = false;
+                const districts = stateDivisionData[stateSelect.value][divisionSelect.value];
+                districts.forEach(dist => {
+                    districtSelect.innerHTML += <option>${dist}</option>;
+                });
+            } else {
+                districtSelect.disabled = true;
+            }
+        });
     }
 
-    if (selectedSambandh === 'प्रपौत्र') {
-      const dadaNaamLabel = document.createElement('label');
-      dadaNaamLabel.textContent = 'दादा का नाम:';
-      extraFields.appendChild(dadaNaamLabel);
+    // सेनानी और उत्तराधिकारी के ड्रॉपडाउन सेट करें
+    setupDropdowns('ffState', 'ffDivision', 'ffDistrict');
+    setupDropdowns('heirState', 'heirDivision', 'heirDistrict');
 
-      const dadaNaamInput = document.createElement('input');
-      dadaNaamInput.type = 'text';
-      dadaNaamInput.name = 'dadaNaam';
-      extraFields.appendChild(dadaNaamInput);
-    }
-  });
-
-  // फ़ॉर्म सबमिट करें
-  const form = document.getElementById('senaniForm');
-  form.addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const formData = new FormData(form);
-    const data = {};
-    formData.forEach((value, key) => {
-      data[key] = value;
+    // संबंध के अनुसार फील्ड
+    document.getElementById('relationship').addEventListener('change', function() {
+        const relationFields = document.getElementById('relationFields');
+        relationFields.innerHTML = '';
+        
+        switch(this.value) {
+            case 'प्रपौत्र':
+                relationFields.innerHTML += `
+                    <div class="relation-field">
+                        <label>पिता का नाम:</label>
+                        <input type="text" required>
+                    </div>
+                    <div class="relation-field">
+                        <label>दादा का नाम:</label>
+                        <input type="text" required>
+                    </div>
+                `;
+                break;
+                
+            case 'पोता':
+                relationFields.innerHTML += `
+                    <div class="relation-field">
+                        <label>पिता का नाम:</label>
+                        <input type="text" required>
+                    </div>
+                `;
+                break;
+        }
     });
 
-    // Google Apps Script वेब ऐप URL
-    const scriptUrl = '1Ij9SBzOSedgdD_dM1iKqZsPExLIxn9usPkbgV_MLFg8" sheet name "data Sheet8" , "https://script.google.com/macros/s/AKfycbxxqVUteIWtcd_A0XfFh2wq8A4lI5iVNC3RUIzt_5yomTpBgaqxezF4jMZGssRacqJM/exec';
+    // Google Sheet से सेनानी के नाम
+    async function loadFighterNames() {
+        try {
+            // यहां अपने Google Apps Script URL का उपयोग करें
+            const response = await fetch('YOUR_GOOGLE_SCRIPT_URL_HERE');
+            const names = await response.json();
+            
+            const select = document.getElementById('fighterName');
+            names.forEach(name => {
+                select.innerHTML += <option>${name}</option>;
+            });
+        } catch (error) {
+            console.error('Error loading names:', error);
+        }
+    }
+    loadFighterNames();
 
-    fetch(scriptUrl, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => {
+    // फॉर्म सबमिशन
+    document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = {
+            ffState: document.getElementById('ffState').value,
+            ffDivision: document.getElementById('ffDivision').value,
+            ffDistrict: document.getElementById('ffDistrict').value,
+            fighterName: document.getElementById('fighterName').value || document.getElementById('newFighterName').value,
+            relationship: document.getElementById('relationship').value,
+            heirName: document.getElementById('heirName').value,
+            mobile: document.getElementById('mobile').value,
+            heirState: document.getElementById('heirState').value,
+            heirDivision: document.getElementById('heirDivision').value,
+            heirDistrict: document.getElementById('heirDistrict').value,
+            address: document.getElementById('address').value,
+            additionalInfo: document.getElementById('additionalInfo').value
+        };
+
+        try {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbxxqVUteIWtcd_A0XfFh2wq8A4lI5iVNC3RUIzt_5yomTpBgaqxezF4jMZGssRacqJM/exec', {
+                method: 'POST',
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                document.getElementById('message').textContent = 'डेटा सफलतापूर्वक सहेजा गया!';
+                document.getElementById('registrationForm').reset();
+            } else {
+                throw new Error('Server error');
+            }
+        } catch (error) {
+            document.getElementById('message').textContent = 'त्रुटि: डेटा सहेज नहीं पाए';
+        }
+    });
+});
